@@ -57,5 +57,7 @@ namespace TicTacToeGame
             Console.WriteLine("  {0}  |  {1}  |  {2}", board[7], board[8], board[9]);
             Console.WriteLine("     |     |      ");
         }
+
+
     }
 }

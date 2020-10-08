@@ -16,6 +16,8 @@ namespace TicTacToeGame
             Console.WriteLine("Welcome to Tic Tac Toe Game");
             
             char[] board = TicTacToeGame.AssignBoard();
+            chooseOptions();
+            TicTacToeGame.ShowBoardInGame(board);
 
         }
     }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace TicTacToeGame
@@ -34,6 +35,27 @@ namespace TicTacToeGame
                 computerChoice = FIRST_CHOICE;
             }
             Console.WriteLine("Choice of Player is {0} and computer is {1}", playerChoice, computerChoice);
+        }
+
+        public static void updateBoard(char [] updateBoard)
+        {
+            for(int i=1;i<board.Length;i++)
+            {
+                board[i] = updateBoard[i];
+            }
+        }
+        public static void ShowBoardInGame(char[] board)
+        {
+            updateBoard(board);
+            Console.WriteLine("     |     |      ");
+            Console.WriteLine("  {0}  |  {1}  |  {2}", board[1], board[2], board[3]);
+            Console.WriteLine("_____|_____|_____ ");
+            Console.WriteLine("     |     |      ");
+            Console.WriteLine("  {0}  |  {1}  |  {2}", board[4], board[5], board[6]);
+            Console.WriteLine("_____|_____|_____ ");
+            Console.WriteLine("     |     |      ");
+            Console.WriteLine("  {0}  |  {1}  |  {2}", board[7], board[8], board[9]);
+            Console.WriteLine("     |     |      ");
         }
     }
 }

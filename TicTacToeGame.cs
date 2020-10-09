@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 
@@ -12,6 +13,8 @@ namespace TicTacToeGame
         public const char SECOND_CHOICE = 'O';
         public static char playerChoice;
         public static char computerChoice;
+        public static int[] index = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+        public static int movePosition;
 
         public static char[] AssignBoard()
         {
@@ -21,7 +24,10 @@ namespace TicTacToeGame
             }
             return board;
         }
-
+        /// <summary>
+        /// Choices the in game.
+        /// </summary>
+        /// <param name="choice">The choice.</param>
         public static void ChoiceInGame(char choice)
         {
             if (choice == 'X')
@@ -36,7 +42,10 @@ namespace TicTacToeGame
             }
             Console.WriteLine("Choice of Player is {0} and computer is {1}", playerChoice, computerChoice);
         }
-
+        /// <summary>
+        /// Updates the board.
+        /// </summary>
+        /// <param name="updateBoard">The update board.</param>
         public static void UpdateBoard(char [] updateBoard)
         {
             for(int i=1;i<board.Length;i++)
@@ -44,6 +53,10 @@ namespace TicTacToeGame
                 board[i] = updateBoard[i];
             }
         }
+        /// <summary>
+        /// Shows the board in game.
+        /// </summary>
+        /// <param name="board">The board.</param>
         public static void ShowBoardInGame(char[] board)
         {
             UpdateBoard(board);
@@ -57,19 +70,26 @@ namespace TicTacToeGame
             Console.WriteLine("  {0}  |  {1}  |  {2}", board[7], board[8], board[9]);
             Console.WriteLine("     |     |      ");
         }
-
-        public static int AlreadyOccupied(char[] board, int position)
+        public static int getUserMove(char[] board)
         {
-            if (board[position] == playerChoice)
-                return 1;
-            else if (board[position] == computerChoice)
-                return 2;
-            else if (board[position] == ' ')
-                return 3;
-            else
+            Console.WriteLine("Enter your move");
+            movePosition = Convert.ToInt32(Console.ReadLine());
+            if (index.Contains(movePosition))
+            {
+                Console.WriteLine("Present In Index");
+                if (board[movePosition] == playerChoice)
+                    return 1;
+                else if (board[movePosition] == computerChoice)
+                    return 2;
+                else if (board[movePosition] == ' ')
+                    return 3;
+            }
                 return 0;
         }
-        
+        /// <summary>
+        /// Tosses the feature.
+        /// </summary>
+        /// <returns></returns>
         public static int TossFeature()
         {
             int chance;
@@ -89,7 +109,11 @@ namespace TicTacToeGame
             }
             return chance;
         }
-
+        /// <summary>
+        /// Checks for game status.
+        /// </summary>
+        /// <param name="gameBoard">The game board.</param>
+        /// <returns></returns>
         public static char CheckForGameStatus(char[] gameBoard)
         {
             UpdateBoard(gameBoard);
@@ -140,17 +164,23 @@ namespace TicTacToeGame
             }
             return 'n';
         }
-
+        /// <summary>
+        /// Declarations for Status of the game.
+        /// </summary>
+        /// <param name="flagForStatus">The flag for status.</param>
+        /// <param name="noOfTurns">The no of turns.</param>
         public static void DeclarationInGame(char flagForStatus, int noOfTurns)
         {
             if (flagForStatus == computerChoice)
             {
                 Console.Clear();
+                ShowBoardInGame(board);
                 Console.WriteLine("============Computer Has Won the Game============");
             }
             else if (flagForStatus == playerChoice)
             {
                 Console.Clear();
+                ShowBoardInGame(board);
                 Console.WriteLine("============Player Has Won the Game============");
             }
             else if (flagForStatus == 'n' && noOfTurns == 9)

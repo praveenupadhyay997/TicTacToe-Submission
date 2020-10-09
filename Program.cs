@@ -8,8 +8,10 @@ namespace TicTacToeGame
     class Program
     {
         public static char[] board = new char[10];
-        public static int[] index = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
         public static char playerMove, computerMove;
+        /// <summary>
+        /// To give the player a choice to choose his symbol
+        /// </summary>
         public static void chooseOptions()
         {
             Console.WriteLine("Enter your Choice user X or O=");
@@ -17,37 +19,26 @@ namespace TicTacToeGame
             TicTacToeGame.ChoiceInGame(userChoice);
         }
 
-        public static int getUserMove(char[] board)
-        {
-            Console.WriteLine("Enter your move");
-            int movePosition = Convert.ToInt32(Console.ReadLine());
-            if (board[movePosition] == ' ')
-                return movePosition;
-            else
-                return 0;
-        }
-
+        /// <summary>
+        /// Function to Replicate the entire move starting from the getting position from user
+        /// </summary>
+        /// <param name="chance"></param>
+        /// <returns></returns>
         public static int CompleteMove(int chance)
         {
             if (chance == 1)
             {
                 Console.WriteLine("\n\n==============Player Turn=================");
                 TicTacToeGame.ShowBoardInGame(board);
-                int userMove = getUserMove(board);
-                if (index.Contains(userMove))
-                {
-                    Console.WriteLine("Eligible move");
-                }
-
-                int historyPositionStatus = TicTacToeGame.AlreadyOccupied(board, userMove);
-                if (historyPositionStatus == 3)
-                    board[userMove] = playerMove;
-                else if (historyPositionStatus == 1)
+                int userMove = TicTacToeGame.getUserMove(board);
+                if (userMove == 3)
+                    board[TicTacToeGame.movePosition] = playerMove;
+                else if ( userMove== 1)
                 {
                     Console.WriteLine("You have already occupied this position");
                     return 1;
                 }
-                else if (historyPositionStatus == 2)
+                else if (userMove == 2)
                 {
                     Console.WriteLine("Computer has already occupied this position");
                     return 1;
@@ -57,25 +48,21 @@ namespace TicTacToeGame
             {
                 Console.WriteLine("\n\n==============Computer Turn=================");
                 TicTacToeGame.ShowBoardInGame(board);
-                int userMove = getUserMove(board);
-                if (index.Contains(userMove))
-                {
-                    Console.WriteLine("Eligible move");
-                }
-
-                int historyPositionStatus = TicTacToeGame.AlreadyOccupied(board, userMove);
-                if (historyPositionStatus == 3)
-                    board[userMove] = computerMove;
-                else if (historyPositionStatus == 1)
+                int userMove = TicTacToeGame.getUserMove(board);
+                if (userMove == 3)
+                    board[TicTacToeGame.movePosition] = computerMove;
+                else if (userMove == 1)
                 {
                     Console.WriteLine("You have already occupied this position");
                     return 1;
                 }
-                else if (historyPositionStatus == 2)
+                else if (userMove == 2)
                 {
                     Console.WriteLine("Computer has already occupied this position");
                     return 1;
                 }
+                else if(userMove==0)
+                    Console.WriteLine("Ineligible Index Position");    
             }
             return 0;
         }
@@ -92,7 +79,7 @@ namespace TicTacToeGame
 
             int chance = TicTacToeGame.TossFeature();
             char flagForMatchStatus = 'n';
-            while(flagForMatchStatus == 'n')
+            while(flagForMatchStatus == 'n' && count <9)
             {
                 if (chance == 1)
                 {

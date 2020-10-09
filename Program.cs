@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualBasic.CompilerServices;
 using System;
 using System.Linq;
+using System.Threading;
 
 namespace TicTacToeGame
 {
@@ -30,6 +31,7 @@ namespace TicTacToeGame
         {
             if (chance == 1)
             {
+                Console.WriteLine("\n\n==============Player Turn=================");
                 TicTacToeGame.ShowBoardInGame(board);
                 int userMove = getUserMove(board);
                 if (index.Contains(userMove))
@@ -53,6 +55,7 @@ namespace TicTacToeGame
             }
             else
             {
+                Console.WriteLine("\n\n==============Computer Turn=================");
                 TicTacToeGame.ShowBoardInGame(board);
                 int userMove = getUserMove(board);
                 if (index.Contains(userMove))
@@ -80,7 +83,7 @@ namespace TicTacToeGame
         static void Main(string[] args)
         {
             Console.WriteLine("Welcome to Tic Tac Toe Game");
-
+            int count = 0;
             board = TicTacToeGame.AssignBoard();
             chooseOptions();
 
@@ -88,35 +91,37 @@ namespace TicTacToeGame
             computerMove = TicTacToeGame.computerChoice;
 
             int chance = TicTacToeGame.TossFeature();
-            if (chance == 1)
+            char flagForMatchStatus = 'n';
+            while(flagForMatchStatus == 'n')
             {
-                int flag = CompleteMove(chance);
-                if (flag == 1)
+                if (chance == 1)
                 {
-                    Console.WriteLine("Please make a move in the blanks");
+                    int flag = CompleteMove(chance);
+                    if (flag == 1)
+                    {
+                        Console.WriteLine("Please make a move in the blanks");
+                    }
+                    else
+                    {
+                        chance = 2;
+                    }
                 }
                 else
                 {
-                    chance = 2;
-                    TicTacToeGame.ShowBoardInGame(board);
+                    int flag = CompleteMove(chance);
+                    if (flag == 1)
+                    {
+                        Console.WriteLine("Please make a move in the blanks");
+                    }
+                    else
+                    {
+                        chance = 1;
+                    }
                 }
+                flagForMatchStatus = TicTacToeGame.CheckForGameStatus(board);
+                TicTacToeGame.DeclarationInGame(flagForMatchStatus, count);
+                count++;
             }
-            else
-            {
-                int flag = CompleteMove(chance);
-                if (flag == 1)
-                {
-                    Console.WriteLine("Please make a move in the blanks");
-                }
-                else
-                {
-                    chance = 2;
-                    TicTacToeGame.ShowBoardInGame(board);
-                }
-            }
-
-
-
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualBasic.CompilerServices;
+using System;
 using System.Linq;
 
 namespace TicTacToeGame
@@ -7,6 +8,7 @@ namespace TicTacToeGame
     {
         public static char[] board = new char[10];
         public static int[] index = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+        public static char playerMove, computerMove;
         public static void chooseOptions()
         {
             Console.WriteLine("Enter your Choice user X or O=");
@@ -24,18 +26,74 @@ namespace TicTacToeGame
                 return 0;
         }
 
+        public static int completeMove(int chance)
+        {
+            if(chance ==1)
+            {
+                TicTacToeGame.ShowBoardInGame(board);
+                int userMove = getUserMove(board);
+                if (index.Contains(userMove))
+                {
+                    Console.WriteLine("Eligible move");
+                }
+
+                int historyPositionStatus = TicTacToeGame.alreadyOccupied(board, userMove);
+                if (historyPositionStatus == 3)
+                    board[userMove] = playerMove;
+                else if (historyPositionStatus == 1)
+                {
+                    Console.WriteLine("You have already occupied this position");
+                    return 1;
+                }
+                else if (historyPositionStatus == 2)
+                {
+                    Console.WriteLine("Computer has already occupied this position");
+                    return 1;
+                }
+            }
+            return 0;
+        }
+
         static void Main(string[] args)
         {
             Console.WriteLine("Welcome to Tic Tac Toe Game");
             
             board = TicTacToeGame.AssignBoard();
             chooseOptions();
-            TicTacToeGame.ShowBoardInGame(board);
-            int userMove = getUserMove(board);
-            if(index.Contains(userMove))
+
+            playerMove = TicTacToeGame.playerChoice;
+            computerMove = TicTacToeGame.computerChoice;
+
+            int chance = 1;
+            if(chance==1)
             {
-                Console.WriteLine("Eligible move");
+                int flag = completeMove(chance);
+                if (flag == 1)
+                {
+                    Console.WriteLine("Please make a move in the blanks");
+                }
+                else
+                {
+                    chance = 2;
+                    TicTacToeGame.ShowBoardInGame(board);
+                }
             }
+            else
+            {
+                int flag = completeMove(chance);
+                if (flag == 1)
+                {
+                    Console.WriteLine("Please make a move in the blanks");
+                }
+                else
+                {
+                    chance = 2;
+                    TicTacToeGame.ShowBoardInGame(board);
+                }
+            }
+
+            
+
         }
     }
 }

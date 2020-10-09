@@ -58,6 +58,16 @@ namespace TicTacToeGame
             Console.WriteLine("     |     |      ");
         }
 
-
+        public static int alreadyOccupied(char[] board, int position)
+        {
+            if (board[position] == playerChoice)
+                return 1;
+            else if (board[position] == computerChoice)
+                return 2;
+            else if (board[position] == ' ')
+                return 3;
+            else
+                return 0;
+        }
     }
 }

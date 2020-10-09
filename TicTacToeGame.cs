@@ -37,7 +37,7 @@ namespace TicTacToeGame
             Console.WriteLine("Choice of Player is {0} and computer is {1}", playerChoice, computerChoice);
         }
 
-        public static void updateBoard(char [] updateBoard)
+        public static void UpdateBoard(char [] updateBoard)
         {
             for(int i=1;i<board.Length;i++)
             {
@@ -46,7 +46,7 @@ namespace TicTacToeGame
         }
         public static void ShowBoardInGame(char[] board)
         {
-            updateBoard(board);
+            UpdateBoard(board);
             Console.WriteLine("     |     |      ");
             Console.WriteLine("  {0}  |  {1}  |  {2}", board[1], board[2], board[3]);
             Console.WriteLine("_____|_____|_____ ");
@@ -58,7 +58,7 @@ namespace TicTacToeGame
             Console.WriteLine("     |     |      ");
         }
 
-        public static int alreadyOccupied(char[] board, int position)
+        public static int AlreadyOccupied(char[] board, int position)
         {
             if (board[position] == playerChoice)
                 return 1;
@@ -69,5 +69,27 @@ namespace TicTacToeGame
             else
                 return 0;
         }
+        
+        public static int TossFeature()
+        {
+            int chance;
+            Random random = new Random();
+            Console.WriteLine("Player Call Head - 0 or Tail - 1");
+            int tossCall = Convert.ToInt32(Console.ReadLine());
+            int tossVar = random.Next(0, 2);
+            if (tossVar == tossCall)
+            {
+                Console.WriteLine("Player Won the toss");
+                chance = 1;
+            }
+            else
+            {
+                Console.WriteLine("Computer Won the toss");
+                chance = 2;
+            }
+            return chance;
+        }
+
+
     }
 }

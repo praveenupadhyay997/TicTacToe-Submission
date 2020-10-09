@@ -90,6 +90,74 @@ namespace TicTacToeGame
             return chance;
         }
 
+        public static char CheckForGameStatus(char[] gameBoard)
+        {
+            UpdateBoard(gameBoard);
+            // For the Horizontal Position Win
+            if (board[1] == board[2] && board[2] == board[3])
+            {
+                if(board[1]!=' ')
+                return board[1];
+            }
+            else if (board[4] == board[5] && board[5] == board[6])
+            {
+                if (board[4] != ' ')
+                    return board[4];
+            }
+            else if (board[6] == board[7] && board[7] == board[8])
+            {
+                if (board[6] != ' ')
+                    return board[6];
+            }
 
+            // For Vertical Position Win
+            else if (board[1] == board[4] && board[4] == board[7])
+            {
+                if (board[1] != ' ')
+                    return board[1];
+            }
+            else if (board[2] == board[5] && board[5] == board[8])
+            {
+                if (board[2] != ' ')
+                    return board[2];
+            }
+            else if (board[3] == board[6] && board[6] == board[9])
+            {
+                if (board[3] != ' ')
+                    return board[3];
+            }
+
+            //Check For Diagonal Position Win
+            else if (board[1] == board[5] && board[5] == board[9])
+            {
+                if (board[1] != ' ')
+                    return board[1];
+            }
+            else if (board[3] == board[5] && board[5] == board[7])
+            {
+                if (board[3] != ' ')
+                    return board[3];
+            }
+            return 'n';
+        }
+
+        public static void DeclarationInGame(char flagForStatus, int noOfTurns)
+        {
+            if (flagForStatus == computerChoice)
+            {
+                Console.Clear();
+                Console.WriteLine("============Computer Has Won the Game============");
+            }
+            else if (flagForStatus == playerChoice)
+            {
+                Console.Clear();
+                Console.WriteLine("============Player Has Won the Game============");
+            }
+            else if (flagForStatus == 'n' && noOfTurns == 9)
+            {
+                Console.Clear();
+                Console.WriteLine("============Game Has Tied============");
+            } 
+        }
     }
 }

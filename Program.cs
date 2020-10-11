@@ -30,7 +30,7 @@ namespace TicTacToeGame
             {
                 Console.WriteLine("\n\n==============Player Turn=================");
                 TicTacToeGame.ShowBoardInGame(board);
-                int userMove = TicTacToeGame.getUserMove(board);
+                int userMove = TicTacToeGame.getUserMove(board, chance);
                 if (userMove == 3)
                     board[TicTacToeGame.movePosition] = playerMove;
                 else if ( userMove== 1)
@@ -48,7 +48,7 @@ namespace TicTacToeGame
             {
                 Console.WriteLine("\n\n==============Computer Turn=================");
                 TicTacToeGame.ShowBoardInGame(board);
-                int userMove = TicTacToeGame.getUserMove(board);
+                int userMove = TicTacToeGame.getUserMove(board, chance);
                 if (userMove == 3)
                     board[TicTacToeGame.movePosition] = computerMove;
                 else if (userMove == 1)
@@ -62,14 +62,14 @@ namespace TicTacToeGame
                     return 1;
                 }
                 else if(userMove==0)
-                    Console.WriteLine("Ineligible Index Position");    
+                    Console.WriteLine("Ineligible Position On board");    
             }
             return 0;
         }
 
         static void Main(string[] args)
         {
-            Console.WriteLine("Welcome to Tic Tac Toe Game");
+            Console.WriteLine("===============Welcome to Tic Tac Toe Game===============");
             int count = 0;
             board = TicTacToeGame.AssignBoard();
             chooseOptions();

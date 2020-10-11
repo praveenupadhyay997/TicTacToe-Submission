@@ -72,6 +72,7 @@ namespace TicTacToeGame
         }
         public static int getUserMove(char[] board,int chance)
         {
+            int[] cornerMove = { 1, 3, 7, 9 };
             Random random = new Random();
             if (chance == 2)
             {
@@ -79,8 +80,18 @@ namespace TicTacToeGame
                 int playerWinning = TicTacToeGame.GetWinnersMove(board);
                 if (index.Contains(playerWinning))
                 {
-                    Console.WriteLine("Player Is About to Win. Go To Block it");
                     movePosition = playerWinning;
+                }
+                else
+                {
+                    foreach(int i in cornerMove)
+                    {
+                        if (board[i] == ' ')
+                        {
+                            movePosition = i;
+                            break;
+                        }
+                    }
                 }
             }
             else
@@ -205,7 +216,11 @@ namespace TicTacToeGame
                 Environment.Exit(0);
             } 
         }
-
+        /// <summary>
+        /// This method is all about making computer's move intelligent and not random
+        /// </summary>
+        /// <param name="board"></param>
+        /// <returns></returns>
         public static int GetWinnersMove(char[] board)
         {
             int[] horizontalTracing = { 1, 4, 7 };
@@ -252,6 +267,5 @@ namespace TicTacToeGame
             }
             return 0;
         }
-
     }
 }

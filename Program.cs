@@ -79,7 +79,7 @@ namespace TicTacToeGame
 
             int chance = TicTacToeGame.TossFeature();
             char flagForMatchStatus = 'n';
-            while(flagForMatchStatus == 'n' && count <9)
+            while(flagForMatchStatus == 'n' && count <=9)
             {
                 if (chance == 1)
                 {

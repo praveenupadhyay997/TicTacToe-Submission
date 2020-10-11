@@ -80,6 +80,7 @@ namespace TicTacToeGame
                 if (index.Contains(playerWinning))
                 {
                     Console.WriteLine("Player Is About to Win. Go To Block it");
+                    movePosition = playerWinning;
                 }
             }
             else
@@ -212,40 +213,40 @@ namespace TicTacToeGame
             int[] diagonalTracing = { 1, 3 };
             foreach (int i in horizontalTracing) 
             {
-                if (board[i] == board[i + 1] && board[i] == playerChoice)
+                if (board[i] == board[i + 1] && board[i] == playerChoice && board[i+2] == ' ')
                     return i + 2;
-                else if (board[i] == board[i + 2] && board[i] == playerChoice)
+                else if (board[i] == board[i + 2] && board[i] == playerChoice && board[i + 1] == ' ')
                     return i + 1;
-                else if (board[i+2] == board[i + 1] && board[i+2] == playerChoice)
+                else if (board[i+2] == board[i + 1] && board[i+2] == playerChoice && board[i] == ' ')
                     return i ;
             }
             foreach(int i in verticalTracing)
             {
-                if (board[i] == board[i + 3] && board[i] == playerChoice)
+                if (board[i] == board[i + 3] && board[i] == playerChoice && board[i + 6] == ' ')
                     return i + 6;
-                else if (board[i] == board[i + 6] && board[i] == playerChoice)
+                else if (board[i] == board[i + 6] && board[i] == playerChoice && board[i + 3] == ' ')
                     return i + 3;
-                else if (board[i + 3] == board[i + 6] && board[i + 3] == playerChoice)
+                else if (board[i + 3] == board[i + 6] && board[i + 3] == playerChoice && board[i] == ' ')
                     return i;
             }
             foreach(int i in diagonalTracing)
             {
                 if(i==1)
                 {
-                    if (board[i] == board[i + 4] && board[i] == playerChoice)
-                        return i + 6;
-                    else if (board[i] == board[i + 8] && board[i] == playerChoice)
-                        return i + 3;
-                    else if (board[i + 4] == board[i + 8] && board[i + 4] == playerChoice)
+                    if (board[i] == board[i + 4] && board[i] == playerChoice && board[i + 8] == ' ')
+                        return i + 8;
+                    else if (board[i] == board[i + 8] && board[i] == playerChoice && board[i + 4] == ' ')
+                        return i + 4;
+                    else if (board[i + 4] == board[i + 8] && board[i + 4] == playerChoice && board[i] == ' ')
                         return i;
                 }
                 else
                 {
-                    if (board[i] == board[i + 2] && board[i] == playerChoice)
+                    if (board[i] == board[i + 2] && board[i] == playerChoice && board[i + 4] == ' ')
                         return i + 4;
-                    else if (board[i] == board[i + 4] && board[i] == playerChoice)
+                    else if (board[i] == board[i + 4] && board[i] == playerChoice && board[i + 2] == ' ')
                         return i + 2;
-                    else if (board[i + 2] == board[i + 4] && board[i + 2] == playerChoice)
+                    else if (board[i + 2] == board[i + 4] && board[i + 2] == playerChoice && board[i] == ' ')
                         return i;
                 }
             }

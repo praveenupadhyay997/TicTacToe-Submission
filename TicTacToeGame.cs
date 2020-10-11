@@ -235,7 +235,6 @@ namespace TicTacToeGame
                 ShowBoardInGame(board);
                 Console.WriteLine("============Game Has Tied============");
                 Console.ReadKey();
-                Environment.Exit(0);
             }
         }
         /// <summary>

@@ -14,11 +14,11 @@ namespace TicTacToeGame
         public static char playerChoice;
         public static char computerChoice;
         public static int[] index = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-        public static int movePosition;
+        public static int movePosition = 0;
 
         public static char[] AssignBoard()
         {
-            for(int i=0; i<board.Length;i++)
+            for (int i = 0; i < board.Length; i++)
             {
                 board[i] = ' ';
             }
@@ -46,9 +46,9 @@ namespace TicTacToeGame
         /// Updates the board.
         /// </summary>
         /// <param name="updateBoard">The update board.</param>
-        public static void UpdateBoard(char [] updateBoard)
+        public static void UpdateBoard(char[] updateBoard)
         {
-            for(int i=1;i<board.Length;i++)
+            for (int i = 1; i < board.Length; i++)
             {
                 board[i] = updateBoard[i];
             }
@@ -70,26 +70,47 @@ namespace TicTacToeGame
             Console.WriteLine("  {0}  |  {1}  |  {2}", board[7], board[8], board[9]);
             Console.WriteLine("     |     |      ");
         }
-        public static int getUserMove(char[] board,int chance)
+        public static int getUserMove(char[] board, int chance)
         {
+            movePosition = 0;
             int[] cornerMove = { 1, 3, 7, 9 };
-            Random random = new Random();
+            int[] nonCornerNonCentreMoves = { 2, 4, 6, 8 };
             if (chance == 2)
             {
-                movePosition = random.Next(1, 10);
-                int playerWinning = TicTacToeGame.GetWinnersMove(board);
+                int playerWinning = TicTacToeGame.GetWinnersMove(board, computerChoice);
                 if (index.Contains(playerWinning))
                 {
                     movePosition = playerWinning;
                 }
                 else
                 {
-                    foreach(int i in cornerMove)
+                    playerWinning = TicTacToeGame.GetWinnersMove(board, playerChoice);
+                    if (index.Contains(playerWinning))
                     {
-                        if (board[i] == ' ')
+                        movePosition = playerWinning;
+                    }
+                    else
+                    {
+                        foreach (int i in cornerMove)
                         {
-                            movePosition = i;
-                            break;
+                            if (board[i] == ' ')
+                            {
+                                movePosition = i;
+                                break;
+                            }
+                        }
+                        if (!cornerMove.Contains(movePosition) && board[5] == ' ' && movePosition == 0)
+                            movePosition = 5;
+                        else if (movePosition == 0)
+                        {
+                            foreach (int i in nonCornerNonCentreMoves)
+                            {
+                                if (board[i] == ' ')
+                                {
+                                    movePosition = i;
+                                    break;
+                                }
+                            }
                         }
                     }
                 }
@@ -99,7 +120,7 @@ namespace TicTacToeGame
                 Console.WriteLine("Enter your move");
                 movePosition = Convert.ToInt32(Console.ReadLine());
             }
-            
+
             if (index.Contains(movePosition))
             {
                 if (board[movePosition] == playerChoice)
@@ -109,7 +130,7 @@ namespace TicTacToeGame
                 else if (board[movePosition] == ' ')
                     return 3;
             }
-                return 0;
+            return 0;
         }
         /// <summary>
         /// Tosses the feature.
@@ -145,8 +166,8 @@ namespace TicTacToeGame
             // For the Horizontal Position Win
             if (board[1] == board[2] && board[2] == board[3])
             {
-                if(board[1]!=' ')
-                return board[1];
+                if (board[1] != ' ')
+                    return board[1];
             }
             else if (board[4] == board[5] && board[5] == board[6])
             {
@@ -211,57 +232,58 @@ namespace TicTacToeGame
             else if (flagForStatus == 'n' && noOfTurns == 9)
             {
                 Console.Clear();
+                ShowBoardInGame(board);
                 Console.WriteLine("============Game Has Tied============");
                 Console.ReadKey();
                 Environment.Exit(0);
-            } 
+            }
         }
         /// <summary>
         /// This method is all about making computer's move intelligent and not random
         /// </summary>
         /// <param name="board"></param>
         /// <returns></returns>
-        public static int GetWinnersMove(char[] board)
+        public static int GetWinnersMove(char[] board, int choice)
         {
             int[] horizontalTracing = { 1, 4, 7 };
             int[] verticalTracing = { 1, 2, 3 };
             int[] diagonalTracing = { 1, 3 };
-            foreach (int i in horizontalTracing) 
+            foreach (int i in horizontalTracing)
             {
-                if (board[i] == board[i + 1] && board[i] == playerChoice && board[i+2] == ' ')
+                if (board[i] == board[i + 1] && board[i] == choice && board[i + 2] == ' ')
                     return i + 2;
-                else if (board[i] == board[i + 2] && board[i] == playerChoice && board[i + 1] == ' ')
+                else if (board[i] == board[i + 2] && board[i] == choice && board[i + 1] == ' ')
                     return i + 1;
-                else if (board[i+2] == board[i + 1] && board[i+2] == playerChoice && board[i] == ' ')
-                    return i ;
-            }
-            foreach(int i in verticalTracing)
-            {
-                if (board[i] == board[i + 3] && board[i] == playerChoice && board[i + 6] == ' ')
-                    return i + 6;
-                else if (board[i] == board[i + 6] && board[i] == playerChoice && board[i + 3] == ' ')
-                    return i + 3;
-                else if (board[i + 3] == board[i + 6] && board[i + 3] == playerChoice && board[i] == ' ')
+                else if (board[i + 2] == board[i + 1] && board[i + 2] == choice && board[i] == ' ')
                     return i;
             }
-            foreach(int i in diagonalTracing)
+            foreach (int i in verticalTracing)
             {
-                if(i==1)
+                if (board[i] == board[i + 3] && board[i] == choice && board[i + 6] == ' ')
+                    return i + 6;
+                else if (board[i] == board[i + 6] && board[i] == choice && board[i + 3] == ' ')
+                    return i + 3;
+                else if (board[i + 3] == board[i + 6] && board[i + 3] == choice && board[i] == ' ')
+                    return i;
+            }
+            foreach (int i in diagonalTracing)
+            {
+                if (i == 1)
                 {
-                    if (board[i] == board[i + 4] && board[i] == playerChoice && board[i + 8] == ' ')
+                    if (board[i] == board[i + 4] && board[i] == choice && board[i + 8] == ' ')
                         return i + 8;
-                    else if (board[i] == board[i + 8] && board[i] == playerChoice && board[i + 4] == ' ')
+                    else if (board[i] == board[i + 8] && board[i] == choice && board[i + 4] == ' ')
                         return i + 4;
-                    else if (board[i + 4] == board[i + 8] && board[i + 4] == playerChoice && board[i] == ' ')
+                    else if (board[i + 4] == board[i + 8] && board[i + 4] == choice && board[i] == ' ')
                         return i;
                 }
                 else
                 {
-                    if (board[i] == board[i + 2] && board[i] == playerChoice && board[i + 4] == ' ')
+                    if (board[i] == board[i + 2] && board[i] == choice && board[i + 4] == ' ')
                         return i + 4;
-                    else if (board[i] == board[i + 4] && board[i] == playerChoice && board[i + 2] == ' ')
+                    else if (board[i] == board[i + 4] && board[i] == choice && board[i + 2] == ' ')
                         return i + 2;
-                    else if (board[i + 2] == board[i + 4] && board[i + 2] == playerChoice && board[i] == ' ')
+                    else if (board[i + 2] == board[i + 4] && board[i + 2] == choice && board[i] == ' ')
                         return i;
                 }
             }

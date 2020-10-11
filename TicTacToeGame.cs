@@ -174,7 +174,7 @@ namespace TicTacToeGame
                 if (board[4] != ' ')
                     return board[4];
             }
-            else if (board[6] == board[7] && board[7] == board[8])
+            else if (board[7] == board[8] && board[8] == board[9])
             {
                 if (board[6] != ' ')
                     return board[6];
